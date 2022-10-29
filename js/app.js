@@ -6,34 +6,32 @@ const app = {
     ctx: undefined,
     FPS: '60',
     framesCounter: 0,
-    imageInstance: undefined,
-    canvasSize: {
-        w: undefined,
-        h: undefined,
-    },
+
+    canvasSize: {  w: undefined,  h: undefined, },
 
     backGround: undefined,
+    player: undefined,
 
     init() {
         this.setDimensions()
         this.setContext()
         this.start()
+
+        //console.log(this.player)
+
+
+
     },
 
 
     start() {
-
-        this.reset()
+    this.reset()
         setInterval(() => {
-
             this.clear()
             this.drawAll()
 
-
         }, 60)
     },
-
-
 
 
     setDimensions() {
@@ -55,10 +53,15 @@ const app = {
     },
 
     reset() {
-    this.backGround = new BackGround(this.ctx, this.canvasSize)
+        this.player = new Player(this.ctx, this.canvasSize)
+        this.backGround = new BackGround(this.ctx, this.canvasSize)
     },
 
     drawAll() {
+
         this.backGround.drawBackground()
+        this.player.drawPlayer();
+        this.player.move()
+
     }
 }
