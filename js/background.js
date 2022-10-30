@@ -10,6 +10,17 @@ class BackGround  {
         this.backgroundPositionX = 0,
         this.backgroundPositionY = 0,
         this.backgroundVel = 1
+
+        this.obstacleSize = {
+            w: 200,
+            h: 40
+
+        }
+        this.obstaclePos = {
+            x: 100,
+            y: 100
+        }
+
     }
 
     drawBackground() {
@@ -28,7 +39,9 @@ class BackGround  {
             this.canvasSize.h
         )
 
-        //this.move()
+        this.move()
+
+
     }
 
     move() {
@@ -37,8 +50,4 @@ class BackGround  {
     }
         this.backgroundPositionX -= this.backgroundVel
     }
-
-
-
-
 }
