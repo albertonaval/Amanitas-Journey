@@ -18,9 +18,6 @@ const app = {
         this.start()
 
         //console.log(this.player)
-
-
-
     },
 
 
@@ -30,8 +27,11 @@ const app = {
             this.clear()
             this.drawAll()
 
-        }, 60)
+
+        }, 1000/ this.FPS)
     },
+
+    //ESTABLECER LOS FPS PARA PONERLE VELOCIDAD AL JUEGO.
 
 
     setDimensions() {
@@ -58,10 +58,10 @@ const app = {
     },
 
     drawAll() {
-
         this.backGround.drawBackground()
-        this.player.drawPlayer();
+        //this.backGround.move()
+        this.player.drawPlayer()
         this.player.move()
-
+        this.player.setEventHandlers()
     }
 }

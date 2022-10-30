@@ -12,14 +12,14 @@ class Player {
 
         this.playerPos = {
             x: 20,
-            y: 680
+            y: 20   //this.canvasSize.h - this.playerSize.h - 20
         }
 
-        this.playerPosJump = this.playerPos.y
+        //this.playerPosJump = this.playerPos.y
 
         this.playerVel = {
-            x: 10,
-            y: 30
+            x: 0,
+            y: 1
         }
 
         this.Physics = { gravity: 0.4 };
@@ -46,43 +46,53 @@ class Player {
         this.playerSize.h)
     }
 
-    move() {
-        this.setEventHandlers()
-        //this.playerPos.x += this.playerVel.x
-        this.playerPos.y += this.Physics.gravity
-        this.playerPos.y += this.playerVel.y
-
-        if ( this.playerPos.y < this.playerPosJump) {
-        this.playerPos.y += this.playerVel.y
-        this.playerVel.y += this.Physics.gravity
-        // this.playerPos.x += this.playerVel.x
-        // this.playerVel.x += this.Physics.gravity
-        } else {
-        this.playerPos.y = this.canvasSize.h - this.playerSize.h
-        }
-    }
 
 
-
-
-
+        //this.playerPos.y = this.canvasSize.h - this.playerSize.h - 20
+        // if ( this.playerPos.y < this.playerPosJump) {
+        // this.playerPos.y += this.playerVel.y
+        // this.playerVel.y += this.Physics.gravity
+        // } else {
+        // this.playerPos.y = this.canvasSize.h - this.playerSize.h
+        // }
 
     setEventHandlers() {
         document.onkeydown = event => {
             switch (event.key) {
                 case 'ArrowLeft':
-                    this.playerPos.x -= this.playerVel.x //(10)
+                    this.playerVel.x -= 1 //(10)
                     break;
                 case 'ArrowRight':
-                    this.playerPos.x += this.playerVel.x
+                    this.playerVel.x += 1
                     break;
                 case ' ':
-                    //if (this.playerPos.y < this.canvasSize.h - this.playerSize.h - 90) {
-                        this.playerPos.y -= this.playerVel.y
-                        //this.playerVel += this.gravity
+                    this.playerVel.y -= 10 //CAMARA LENTA
                     break;
             }
         }
+    }
+
+
+move() {
+    this.playerPos.y += this.playerVel.y
+    this.playerPos.x += this.playerVel.x
+
+    if (this.playerVel.x > 2) {
+        this.playerVel.x = 2
+    } else if (this.playerVel.x < - 2) {
+        this.playerVel.x = - 2
+    }
+
+
+    if (this.playerPos.y + this.playerSize.h + this.playerVel.y <= this.canvasSize.h) {
+        this.playerVel.y += this.Physics.gravity
+    } else {
+        this.playerVel.y = 0
+    }
+
+
+    // if (this.playerPos.y >= this.canvasSize.h - this.playerSize.h - 300) {
+    //     this.playerVel.y += - 1
     }
 }
 
