@@ -4,17 +4,17 @@ class Platforms {
         this.canvasSize = canvasSize
 
         this.platformSize = {
-            w: 100,
+            w: 150,
             h: 200
         }
         this.platformPos = {
-            x: this.canvasSize.w + 20,
+            x: this.canvasSize.w + 100,
             y: this.canvasSize.h - this.platformSize.h
         }
 
         this.image = new Image()
         this.image.src = './images/tube.png'
-        this.platformVel = 1,
+        this.platformVel = 2,
 
         this.createPlatforms()
     }
@@ -34,6 +34,7 @@ class Platforms {
     if (this.platformPos.x <= - this.canvasSize.w) {
         this.platformPos.x = 0
     }
-        this.platformPos.x -= this.platformVel
+    this.platformPos.x -= this.platformVel
     }
+
 }

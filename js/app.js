@@ -7,30 +7,35 @@ const app = {
     FPS: '60',
     framesCounter: 0,
 
-    canvasSize: {  w: undefined,  h: undefined, },
+    canvasSize: { w: undefined, h: undefined, },
 
     backGround: undefined,
     player: undefined,
-    platforms : [],
+    platforms: [],
+    enemies: [],
 
     init() {
         this.setDimensions()
         this.setContext()
+        this.createEnemies()
         this.start()
+        this.createPlatforms()
 
-        //console.log(this.player)
     },
 
 
     start() {
-    this.reset()
-        setInterval(() => {
+        this.reset()
 
+        setInterval(() => {
             this.framesCounter++
-            if(this.framesCounter % 100 === 0) this.createPlatforms()
+            if (this.framesCounter % 120 ===  0) this.createPlatforms()
+            //if (this.framesCounter % 120 ===  0) this.createEnemies()
 
             this.clear()
             this.drawAll()
+            this.playerPlatformColission()
+            this.clearPlatforms()
 
 
         }, 1000 / this.FPS)
@@ -49,7 +54,7 @@ const app = {
     },
 
     clear() {
-        this.ctx.clearRect(0,0,this.canvasSize.w, this.canvasSize.h)
+        this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     },
 
     setContext() {
@@ -59,12 +64,21 @@ const app = {
     reset() {
         this.player = new Player(this.ctx, this.canvasSize)
         this.backGround = new BackGround(this.ctx, this.canvasSize)
+        this.enemies = new Enemies(this.ctx, this.canvasSize)
 
     },
 
-    createPlatforms(){
+    createPlatforms() {
         this.platforms.push(new Platforms(this.ctx, this.canvasSize))
-        },
+    },
+    createEnemies() {
+        this.enemies.push(new Enemies(this.ctx, this.canvasSize))
+    },
+
+    clearPlatforms() {
+        this.platforms = this.platforms.filter(obs => obs.platformPos.x + obs.platformSize.w - 40 >= 0)
+        //console.log(this.platforms)
+    },
 
     drawAll() {
         this.backGround.drawBackground()
@@ -72,6 +86,42 @@ const app = {
         this.player.move()
         this.player.setEventHandlers()
         this.platforms.forEach(elm => elm.createPlatforms())
-    }
+        this.enemies.drawEnemies()
+        //console.log(this.platforms)
+    },
 
+    playerPlatformColission() {
+
+        this.platforms.forEach((p) => {
+
+            if (
+                p.platformPos.x < this.player.playerPos.x + this.player.playerSize.w &&
+                p.platformPos.x + p.platformSize.w > this.player.playerPos.x &&
+                p.platformPos.y < this.player.playerPos.y + this.player.playerSize.h &&
+                p.platformSize.h + p.platformPos.y > this.player.playerPos.y
+            ) {
+                if (
+                    p.platformPos.x + p.platformSize.w - 10 > this.player.playerPos.x &&
+                    this.player.playerPos.y > p.platformPos.y
+                ) {
+                    this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
+                    this.player.playerPos.x = p.platformPos.x - this.player.playerSize.w
+                    //console.log('izquierda')
+                } else if (
+                    p.platformPos.x + p.platformSize.w > this.player.playerPos.x &&
+                    this.player.playerPos.y > p.platformPos.y
+                ) {
+                    this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
+                    this.player.playerPos.x = p.platformPos.x + p.platformSize.w
+                    //console.log('derecha')
+                }
+                else {
+                    this.player.playerPos.y = p.platformPos.y - this.player.playerSize.h + 10
+                    this.player.canJump = true
+                    //console.log('arriba')
+                }
+            }
+        })
+    }
 }
+
