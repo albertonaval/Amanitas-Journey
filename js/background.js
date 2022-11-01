@@ -1,4 +1,4 @@
-class BackGround  {
+class BackGround {
     constructor(ctx, canvasSize) {
         this.ctx = ctx
 
@@ -8,17 +8,10 @@ class BackGround  {
         this.image.src = './images/background.jpeg'
 
         this.backgroundPositionX = 0,
-        this.backgroundPositionY = 0,
-        this.backgroundVel = 1
+            this.backgroundPositionY = 0,
 
-        this.obstacleSize = {
-            w: 200,
-            h: 40
-        }
-        this.obstaclePos = {
-            x: 100,
-            y: 100
-        }
+            this.backgroundVel = 1
+
     }
 
     drawBackground() {
@@ -36,13 +29,15 @@ class BackGround  {
             this.canvasSize.w,
             this.canvasSize.h
         )
+
+
         this.move()
     }
 
     move() {
-    if (this.backgroundPositionX <= - this.canvasSize.w) {
-        this.backgroundPositionX = 0;
-    }
+        if (this.backgroundPositionX <= - this.canvasSize.w) {
+            this.backgroundPositionX = 0;
+        }
         this.backgroundPositionX -= this.backgroundVel
     }
 }

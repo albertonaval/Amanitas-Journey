@@ -3,17 +3,10 @@ class Enemies {
         this.ctx = ctx
         this.canvasSize = canvasSize
 
+        this.enemiesPos = { x: 25, y: this.getRandom(300, 600) }
+        this.enemiesSize = { w: 120, h: 120 }
 
-        this.enemiesPos = {
-            x: 500,
-            y: 300
-        }
-
-        this.enemiesSize = {
-            w: 150,
-            h: 150
-        }
-        this.enemiesSpeed = 3
+        this.enemiesSpeed = this.getRandom(3, 5)
         this.imageInstance = undefined
         this.enemiesImg = './images/enemy.png'
 
@@ -40,9 +33,13 @@ class Enemies {
     }
 
     moveEnemies() {
-    if (this.enemiesPos.x >= this.canvasSize.w - this.enemiesSize.w) {
-    this.enemiesSpeed *= -1
+        if (this.enemiesPos.x >= this.canvasSize.w - this.enemiesSize.w) {
+            this.enemiesSpeed *= -1
+        }
+        this.enemiesPos.x += this.enemiesSpeed
     }
-    this.enemiesPos.x += this.enemiesSpeed
+
+    getRandom(min, max) {
+        return Math.random() * (max - min) + min
     }
 }

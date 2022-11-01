@@ -3,38 +3,36 @@ class Platforms {
         this.ctx = ctx
         this.canvasSize = canvasSize
 
-        this.platformSize = {
-            w: 150,
-            h: 200
-        }
-        this.platformPos = {
-            x: this.canvasSize.w + 100,
-            y: this.canvasSize.h - this.platformSize.h
-        }
+        this.platformSize = { w: this.getRandom(150, 350), h: 70 }
+        this.platformPos = { x: this.canvasSize.w + 100, y: this.getRandom(300, 680) }
 
         this.image = new Image()
-        this.image.src = './images/tube.png'
-        this.platformVel = 2,
+        this.image.src = './images/platform.png'
+        this.platformVel = this.getRandom(3, 5)
 
-        this.createPlatforms()
+        this.drawPlatforms()
     }
 
-    createPlatforms() {
+    drawPlatforms() {
         this.ctx.drawImage(
             this.image,
             this.platformPos.x,
             this.platformPos.y,
             this.platformSize.w,
-            this.platformSize.h)
-
-        this.movePlatforms()
+            this.platformSize.h
+        )
+        //this.movePlatforms()
     }
 
     movePlatforms() {
-    if (this.platformPos.x <= - this.canvasSize.w) {
-        this.platformPos.x = 0
+        //     if (this.platformPos.x <= - this.canvasSize.w) {
+        //     this.platformPos.x = 0
+        // }
+        this.platformPos.x -= this.platformVel
     }
-    this.platformPos.x -= this.platformVel
+
+    getRandom(min, max) {
+        return Math.random() * (max - min) + min
     }
 
 }
