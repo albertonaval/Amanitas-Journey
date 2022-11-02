@@ -75,12 +75,12 @@ class Player {
         this.playerPos.y += this.playerVel.y
         this.playerPos.x += this.playerVel.x
 
-        if (this.playerPos.y + this.playerSize.h + this.playerVel.y <= this.canvasSize.h) {
+        if (this.playerPos.y + this.playerSize.h + this.playerVel.y <= this.canvasSize.h)
             this.playerVel.y += this.Physics.gravity
-        } else {
-            this.playerVel.y = 0
-            this.canJump = true
-        }
+        // } else {
+        //     this.playerVel.y = 0
+        //     this.canJump = true
+        // }
         if (this.playerPos.x >= this.canvasSize.w - this.playerSize.w) {
             this.playerPos.x = this.canvasSize.w - this.playerSize.w
         }

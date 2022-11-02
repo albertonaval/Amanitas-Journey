@@ -21,7 +21,7 @@ class Platforms {
             this.platformSize.w,
             this.platformSize.h
         )
-        //this.movePlatforms()
+        this.movePlatforms()
     }
 
     movePlatforms() {
