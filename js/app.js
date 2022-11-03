@@ -22,7 +22,6 @@ const app = {
     backGroundMusic: new Audio('./sound/background-music.mp3'),
 
     init() {
-
         this.setDimensions()
         this.setContext()
         this.reset()
@@ -32,12 +31,9 @@ const app = {
         this.createPlatforms()
         this.player.setEventHandlers()
         this.backGroundMusic.play()
-
     },
 
     start() {
-
-
         this.interval = setInterval(() => {
             this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
             if (this.framesCounter % 100 === 0) this.createPlatforms()
@@ -63,8 +59,6 @@ const app = {
         document.querySelector('#myCanvas').setAttribute('width', this.canvasSize.w)
         document.querySelector('#myCanvas').setAttribute('height', this.canvasSize.h)
     },
-
-
 
     clearInterval() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
