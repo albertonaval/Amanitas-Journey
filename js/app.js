@@ -14,7 +14,7 @@ const app = {
     platforms: [],
     enemies: [],
     tube: undefined,
-    score: 0,
+    score: 1000,
 
     init() {
         this.setDimensions()
@@ -121,8 +121,8 @@ const app = {
             if (
                 p.platformPos.x < this.player.playerPos.x + this.player.playerSize.w && //<-- derecha?
                 p.platformPos.x + p.platformSize.w > this.player.playerPos.x && //<-- izquierda
-                p.platformPos.y < this.player.playerPos.y + this.player.playerSize.h && //<-- 
-                p.platformSize.h + p.platformPos.y > this.player.playerPos.y //<-- 
+                p.platformPos.y < this.player.playerPos.y + this.player.playerSize.h && //<--
+                p.platformSize.h + p.platformPos.y > this.player.playerPos.y //<--
             ) {
                 if (
                     p.platformPos.x + p.platformSize.w - 10 > this.player.playerPos.x &&
