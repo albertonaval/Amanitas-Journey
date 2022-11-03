@@ -1,5 +1,5 @@
 const app = {
-    appName: 'Canvas game',
+    appName: 'Amanita`s Journey',
     version: '1.0.0',
     licensed: undefined,
     author: 'Alexis Marquez & Alberto Naval',
