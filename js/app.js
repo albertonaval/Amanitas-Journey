@@ -22,8 +22,10 @@ const app = {
     backGroundMusic: new Audio('./sound/background-music.mp3'),
 
     init() {
+
         this.setDimensions()
         this.setContext()
+        this.reset()
         this.createEnemies()
         this.createTube()
         this.start()
@@ -34,7 +36,7 @@ const app = {
     },
 
     start() {
-        this.reset()
+
 
         this.interval = setInterval(() => {
             this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
@@ -47,8 +49,9 @@ const app = {
             this.clearPlatforms()
             this.playerEnemiesCollision()
             this.playerTubeCollision()
-            this.isGameOver()
+            this.goOut()
             this.isVictory()
+
         }, 1000 / this.FPS)
     },
 
@@ -108,6 +111,12 @@ const app = {
         this.enemies.forEach(enemy => enemy.drawEnemies())
     },
 
+    goOut() {
+        if (this.player.playerPos.y > this.canvasSize.h + this.player.playerSize.h) {
+            this.isGameOver()
+        }
+    },
+
     playerPlatformColission() {
         this.platforms.forEach((p) => {
             if (
@@ -123,7 +132,6 @@ const app = {
                     this.playerVel *= 1
                     this.player.playerPos.x = p.platformPos.x - this.player.playerSize.w
                     console.log('izquierda')
-
                 } else {
                     this.player.playerPos.y = p.platformPos.y - this.player.playerSize.h + 10
                     this.player.canJump = true
@@ -144,12 +152,12 @@ const app = {
             ) {
                 if (e.enemiesPos.x + e.enemiesSize.w - 10 > this.player.playerPos.x &&
                     this.player.playerPos.y > e.enemiesPos.y) {
-                    this.player.playerPos.y = this.canvasSize.h + this.player.playerSize.h
+                    //this.player.playerPos.y = this.canvasSize.h + this.player.playerSize.h
                     this.isGameOver()
                     console.log('izquierda enemigo')
                 } else if (e.enemiesPos.x + e.enemiesSize.w > this.player.playerPos.x &&
                     this.player.playerPos.y > e.enemiesPos.y) {
-                    this.player.playerPos.y = this.canvasSize.h + this.player.playerSize.h
+                    //this.player.playerPos.y = this.canvasSize.h + this.player.playerSize.h
                     this.isGameOver()
                     console.log('derecha enemigo')
                 } else {
@@ -209,15 +217,14 @@ const app = {
         this.ctx.fillText(`YOU SUCK MOTHERFUCKER!!`, this.canvasSize.w / 2, this.canvasSize.h / 2 + 100)
         this.ctx.fillText(`You killed: ${this.score / 100} enemies`, this.canvasSize.w / 2, this.canvasSize.h / 2 + 200)
     },
+
     isGameOver() {
-        if (this.player.playerPos.y > this.canvasSize.h + this.player.playerSize.h) {
-            clearInterval(this.interval)
-            this.drawGameOver()
-            this.backGroundMusic.pause()
-            this.gameOver.play()
-            console.log('GameOver')
-            this.restartGameOver()
-        }
+        clearInterval(this.interval)
+        this.drawGameOver()
+        this.backGroundMusic.pause()
+        this.gameOver.play()
+        console.log('GameOver')
+        this.restartGameOver()
     },
 
     drawVictory() {
