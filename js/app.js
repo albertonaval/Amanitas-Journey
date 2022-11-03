@@ -36,12 +36,12 @@ const app = {
     start() {
         this.reset()
 
-        setInterval(() => {
-            this.framesCounter++
+        this.interval = setInterval(() => {
+            this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
             if (this.framesCounter % 100 === 0) this.createPlatforms()
             if (this.framesCounter % 200 === 0) this.createEnemies()
 
-            this.clear()
+            this.clearInterval()
             this.drawAll()
             this.playerPlatformColission()
             this.clearPlatforms()
@@ -61,7 +61,9 @@ const app = {
         document.querySelector('#myCanvas').setAttribute('height', this.canvasSize.h)
     },
 
-    clear() {
+
+
+    clearInterval() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     },
 
@@ -184,11 +186,23 @@ const app = {
             this.ctx.fillText(`Score:${this.score}`, this.canvasSize.w - 250, 100)
     },
 
+    restartGameOver() {
+        setTimeout(() => {
+            location.reload()
+        }, 4000)
+    },
+
+    restartVictory() {
+        setTimeout(() => {
+            location.reload()
+        }, 7000)
+    },
+
     drawGameOver() {
         this.ctx.fillStyle = "black",
             this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
         this.ctx.fillStyle = "white",
-            this.ctx.font = "120px Courier New",
+            this.ctx.font = "bold 120px Courier New",
             this.ctx.textAlign = "center",
             this.ctx.fillText('GAME OVER', this.canvasSize.w / 2, this.canvasSize.h / 2)
         this.ctx.font = "small-caps 50px Courier New"
@@ -197,10 +211,12 @@ const app = {
     },
     isGameOver() {
         if (this.player.playerPos.y > this.canvasSize.h + this.player.playerSize.h) {
-            this.clear(setInterval)
+            clearInterval(this.interval)
             this.drawGameOver()
             this.backGroundMusic.pause()
             this.gameOver.play()
+            console.log('GameOver')
+            this.restartGameOver()
         }
     },
 
@@ -215,11 +231,12 @@ const app = {
         this.ctx.fillText(`Your score is: ${this.score}`, this.canvasSize.w / 2, this.canvasSize.h / 2 + 100)
     },
     isVictory() {
-        if (this.score >= 200) {
-            this.clear(setInterval)
+        if (this.score >= 2000) {
+            clearInterval(this.interval)
             this.gameWin.play()
             this.backGroundMusic.pause()
             this.drawVictory()
+            this.restartVictory()
         }
     }
 }
