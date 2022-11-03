@@ -14,7 +14,7 @@ const app = {
     platforms: [],
     enemies: [],
     tube: undefined,
-    score: 1000,
+    score: 0,
 
     init() {
         this.setDimensions()
@@ -47,8 +47,6 @@ const app = {
         }, 1000 / this.FPS)
     },
 
-
-
     setDimensions() {
         this.canvasSize = {
             w: window.innerWidth,
@@ -58,8 +56,6 @@ const app = {
         document.querySelector('#myCanvas').setAttribute('height', this.canvasSize.h)
 
     },
-
-
 
     clear() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
@@ -73,7 +69,6 @@ const app = {
         this.player = new Player(this.ctx, this.canvasSize)
         this.backGround = new BackGround(this.ctx, this.canvasSize)
     },
-
 
     createPlatforms() {
         this.platforms.push(
@@ -98,8 +93,6 @@ const app = {
         this.enemies = this.enemies.filter(e => e.enemiesPos.x + e.enemiesSize.w - 10 >= 0)
     },
 
-
-
     drawAll() {
 
         this.backGround.drawBackground()
@@ -112,7 +105,6 @@ const app = {
         this.enemies.forEach(enemy => enemy.drawEnemies())
 
     },
-
 
     playerPlatformColission() {
 
@@ -142,40 +134,6 @@ const app = {
 
         })
     },
-
-    // playerPlatformColission() {
-
-    //     this.platforms.forEach((p) => {
-
-    //         if ( p.platformPos.x + p.platformSize.w - 10 > this.player.playerPos.x &&
-    //             this.player.playerPos.y > p.platformPos.y) {
-    //             this.player.playerPos.x = p.platformPos.x - this.player.playerSize.w -
-    //             p.platformVel.x - 10
-    //             // }
-
-
-
-    //             // } else if (
-    //             //     p.platformPos.x + p.platformSize.w > this.player.playerPos.x &&
-    //             //     this.player.playerPos.y > p.platformPos.y
-    //             // ) {
-    //             //     this.player.playerPos.y = this.canvasSize.h - this.player.playerSize.h
-    //             //     this.player.playerPos.x = p.platformPos.x + p.platformSize.w
-    //             //     console.log('derecha')
-    //             // }
-    //             // else if (p.platformPos.y < this.player.playerPos.y + this.player.playerSize.h) {
-    //             //     this.player.playerPos.y = p.platformPos.y - this.player.playerSize.h + 10
-    //             //     this.player.canJump = true
-    //             //     this.player.playerVel.y = 0
-    //             //     console.log('arriba')
-    //             // }
-
-
-    //             //else { console.log('abajo') }
-    //         }
-
-    //     })
-    // },
 
     playerEnemiesCollision() {
         this.enemies.forEach((e, index) => {
@@ -271,27 +229,3 @@ const app = {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

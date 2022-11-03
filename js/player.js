@@ -49,8 +49,8 @@ class Player {
                     break;
                 case this.key.jump:
                     if (this.canJump) {
-                        this.canJump = false
                         this.playerVel.y = -20
+                        this.canJump = false
                         break;
                     }
 
@@ -64,9 +64,6 @@ class Player {
                 case this.key.right:
                     this.playerVel.x = 0
                     break;
-                case this.key.jump:
-                    this.playerVel.y = 0
-                    break;
             }
         }
     }
@@ -77,10 +74,7 @@ class Player {
 
         if (this.playerPos.y + this.playerSize.h + this.playerVel.y <= this.canvasSize.h)
             this.playerVel.y += this.Physics.gravity
-        // } else {
-        //     this.playerVel.y = 0
-        //     this.canJump = true
-        // }
+
         if (this.playerPos.x >= this.canvasSize.w - this.playerSize.w) {
             this.playerPos.x = this.canvasSize.w - this.playerSize.w
         }
