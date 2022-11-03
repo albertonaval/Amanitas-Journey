@@ -1,6 +1,5 @@
 class Player {
     constructor(ctx, canvasSize) {
-
         this.ctx = ctx
         this.canvasSize = canvasSize
 
@@ -37,23 +36,22 @@ class Player {
     }
 
     setEventHandlers() {
+        let jumpSound = new Audio('./sound/jump.wav')
         document.onkeydown = event => {
             switch (event.key) {
                 case this.key.left:
                     this.playerVel.x = -4
-
                     break;
                 case this.key.right:
                     this.playerVel.x = +4
-
                     break;
                 case this.key.jump:
                     if (this.canJump) {
                         this.playerVel.y = -20
                         this.canJump = false
+                        jumpSound.play()
                         break;
                     }
-
             }
         }
         document.onkeyup = event => {
@@ -71,10 +69,8 @@ class Player {
     move() {
         this.playerPos.y += this.playerVel.y
         this.playerPos.x += this.playerVel.x
-
         if (this.playerPos.y + this.playerSize.h + this.playerVel.y <= this.canvasSize.h)
             this.playerVel.y += this.Physics.gravity
-
         if (this.playerPos.x >= this.canvasSize.w - this.playerSize.w) {
             this.playerPos.x = this.canvasSize.w - this.playerSize.w
         }

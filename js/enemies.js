@@ -5,20 +5,16 @@ class Enemies {
 
         this.enemiesPos = { x: 25, y: this.getRandom(300, 600) }
         this.enemiesSize = { w: 120, h: 120 }
-
         this.enemiesSpeed = this.getRandom(3, 5)
         this.imageInstance = undefined
         this.enemiesImg = './images/enemy.png'
-
         this.init()
-
     }
 
     init() {
         this.imageInstance = new Image()
         this.imageInstance.src = this.enemiesImg
     }
-
 
     drawEnemies() {
         this.ctx.drawImage(
@@ -28,7 +24,6 @@ class Enemies {
             this.enemiesSize.w,
             this.enemiesSize.h
         )
-
         this.moveEnemies()
     }
 

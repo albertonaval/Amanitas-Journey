@@ -16,6 +16,11 @@ const app = {
     tube: undefined,
     score: 0,
 
+    enemyKill: new Audio('./sound/kill.wav'),
+    gameOver: new Audio('./sound/gameover.wav'),
+    gameWin: new Audio('./sound/win.wav'),
+    backGroundMusic: new Audio('./sound/background-music.mp3'),
+
     init() {
         this.setDimensions()
         this.setContext()
@@ -23,8 +28,10 @@ const app = {
         this.createTube()
         this.start()
         this.createPlatforms()
-    },
+        this.player.setEventHandlers()
+        this.backGroundMusic.play()
 
+    },
 
     start() {
         this.reset()
@@ -42,8 +49,6 @@ const app = {
             this.playerTubeCollision()
             this.isGameOver()
             this.isVictory()
-
-
         }, 1000 / this.FPS)
     },
 
@@ -54,7 +59,6 @@ const app = {
         }
         document.querySelector('#myCanvas').setAttribute('width', this.canvasSize.w)
         document.querySelector('#myCanvas').setAttribute('height', this.canvasSize.h)
-
     },
 
     clear() {
@@ -63,6 +67,7 @@ const app = {
 
     setContext() {
         this.ctx = document.querySelector('#myCanvas').getContext('2d')
+
     },
 
     reset() {
@@ -77,7 +82,6 @@ const app = {
     },
     createEnemies() {
         this.enemies.push(new Enemies(this.ctx, this.canvasSize))
-
     },
 
     createTube() {
@@ -88,28 +92,22 @@ const app = {
         this.platforms = this.platforms.filter(obs => obs.platformPos.x + obs.platformSize.w - 10 >= 0)
     },
 
-
     clearEnemies() {
         this.enemies = this.enemies.filter(e => e.enemiesPos.x + e.enemiesSize.w - 10 >= 0)
     },
 
     drawAll() {
-
         this.backGround.drawBackground()
         this.player.drawPlayer()
         this.player.move()
-        this.player.setEventHandlers()
         this.tube.drawTube()
         this.drawScore()
         this.platforms.forEach(platform => platform.drawPlatforms())
         this.enemies.forEach(enemy => enemy.drawEnemies())
-
     },
 
     playerPlatformColission() {
-
         this.platforms.forEach((p) => {
-
             if (
                 p.platformPos.x < this.player.playerPos.x + this.player.playerSize.w && //<-- derecha?
                 p.platformPos.x + p.platformSize.w > this.player.playerPos.x && //<-- izquierda
@@ -131,7 +129,6 @@ const app = {
                     console.log('arriba')
                 }
             }
-
         })
     },
 
@@ -157,7 +154,7 @@ const app = {
                     this.player.playerPos.y = e.enemiesPos.y - this.player.playerSize.h + 10
                     //const index = this.enemies.indexOf(e)
                     this.enemies.splice(index, 1)
-
+                    this.enemyKill.play()
                     //e.enemiesPos.y = this.canvasSize.h + e.enemiesSize.h
                     if (this.score <= 1900) this.score += 100
                     //else this.isVictory()
@@ -192,19 +189,19 @@ const app = {
             this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
         this.ctx.fillStyle = "white",
             this.ctx.font = "120px Courier New",
-            this.ctx.fillText('GAME OVER', this.canvasSize.w / 4, this.canvasSize.h / 2)
+            this.ctx.textAlign = "center",
+            this.ctx.fillText('GAME OVER', this.canvasSize.w / 2, this.canvasSize.h / 2)
         this.ctx.font = "small-caps 50px Courier New"
-        this.ctx.fillText(`YOU SUCK MOTHERFUCKER!!`, this.canvasSize.w / 4, this.canvasSize.h / 2 + 100)
-        this.ctx.fillText(`   You killed: ${this.score / 100} enemies`, this.canvasSize.w / 4, this.canvasSize.h / 2 + 200)
-
+        this.ctx.fillText(`YOU SUCK MOTHERFUCKER!!`, this.canvasSize.w / 2, this.canvasSize.h / 2 + 100)
+        this.ctx.fillText(`You killed: ${this.score / 100} enemies`, this.canvasSize.w / 2, this.canvasSize.h / 2 + 200)
     },
-
     isGameOver() {
         if (this.player.playerPos.y > this.canvasSize.h + this.player.playerSize.h) {
             this.clear(setInterval)
             this.drawGameOver()
+            this.backGroundMusic.pause()
+            this.gameOver.play()
         }
-
     },
 
     drawVictory() {
@@ -212,20 +209,17 @@ const app = {
             this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h),
             this.ctx.fillStyle = "black",
             this.ctx.font = "bold 120px Courier New"
-        this.ctx.fillText('YOU WIN', this.canvasSize.w / 4 + 100, this.canvasSize.h / 2)
+        this.ctx.textAlign = "center",
+            this.ctx.fillText('YOU WIN', this.canvasSize.w / 2, this.canvasSize.h / 2)
         this.ctx.font = "small-caps 50px Courier New"
-        this.ctx.fillText(`Your score is: ${this.score}`, this.canvasSize.w / 3, this.canvasSize.h / 2 + 100)
+        this.ctx.fillText(`Your score is: ${this.score}`, this.canvasSize.w / 2, this.canvasSize.h / 2 + 100)
     },
-
     isVictory() {
-        if (this.score >= 1500) {
+        if (this.score >= 200) {
             this.clear(setInterval)
+            this.gameWin.play()
+            this.backGroundMusic.pause()
             this.drawVictory()
         }
-
     }
-
-
-
-
 }

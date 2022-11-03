@@ -1,17 +1,13 @@
 class BackGround {
     constructor(ctx, canvasSize) {
         this.ctx = ctx
-
         this.canvasSize = canvasSize
 
         this.image = new Image()
         this.image.src = './images/background.jpeg'
-
         this.backgroundPositionX = 0,
             this.backgroundPositionY = 0,
-
             this.backgroundVel = 1
-
     }
 
     drawBackground() {
@@ -29,8 +25,6 @@ class BackGround {
             this.canvasSize.w,
             this.canvasSize.h
         )
-
-
         this.move()
     }
 
