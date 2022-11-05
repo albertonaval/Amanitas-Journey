@@ -3,7 +3,7 @@ class Player {
         this.ctx = ctx
         this.canvasSize = canvasSize
 
-        this.playerSize = { w: 100, h: 100 }
+        this.playerSize = { w: 90, h: 90 }
         this.playerPos = { x: 20, y: 20 }
         this.playerVel = { x: 0, y: 1 }
         this.Physics = { gravity: 0.6 };

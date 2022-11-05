@@ -41,7 +41,7 @@ const app = {
 
             this.clearInterval()
             this.drawAll()
-            this.playerPlatformColission()
+            this.playerPlatformCollision()
             this.clearPlatforms()
             this.playerEnemiesCollision()
             this.playerTubeCollision()
@@ -66,7 +66,6 @@ const app = {
 
     setContext() {
         this.ctx = document.querySelector('#myCanvas').getContext('2d')
-
     },
 
     reset() {
@@ -111,13 +110,13 @@ const app = {
         }
     },
 
-    playerPlatformColission() {
+    playerPlatformCollision() {
         this.platforms.forEach((p) => {
             if (
-                p.platformPos.x < this.player.playerPos.x + this.player.playerSize.w && //<-- derecha?
-                p.platformPos.x + p.platformSize.w > this.player.playerPos.x && //<-- izquierda
-                p.platformPos.y < this.player.playerPos.y + this.player.playerSize.h && //<--
-                p.platformSize.h + p.platformPos.y > this.player.playerPos.y //<--
+                p.platformPos.x < this.player.playerPos.x + this.player.playerSize.w &&
+                p.platformPos.x + p.platformSize.w > this.player.playerPos.x &&
+                p.platformPos.y < this.player.playerPos.y + this.player.playerSize.h &&
+                p.platformSize.h + p.platformPos.y > this.player.playerPos.y
             ) {
                 if (
                     p.platformPos.x + p.platformSize.w - 10 > this.player.playerPos.x &&
@@ -146,22 +145,18 @@ const app = {
             ) {
                 if (e.enemiesPos.x + e.enemiesSize.w - 10 > this.player.playerPos.x &&
                     this.player.playerPos.y > e.enemiesPos.y) {
-                    //this.player.playerPos.y = this.canvasSize.h + this.player.playerSize.h
                     this.isGameOver()
                     console.log('izquierda enemigo')
                 } else if (e.enemiesPos.x + e.enemiesSize.w > this.player.playerPos.x &&
                     this.player.playerPos.y > e.enemiesPos.y) {
-                    //this.player.playerPos.y = this.canvasSize.h + this.player.playerSize.h
                     this.isGameOver()
                     console.log('derecha enemigo')
                 } else {
                     this.player.playerPos.y = e.enemiesPos.y - this.player.playerSize.h + 10
                     //const index = this.enemies.indexOf(e)
-                    this.enemies.splice(index, 1)
+                    this.enemies.splice(index, 1) // Al pasarle el metodo SPLICE elimino ese enemigo del Array. Lo borro del juego. Para seleccionar que enemigo es le paso el metodo INDEX al forEach y en el SPLICE le paso el numero que deseo eliminar.
                     this.enemyKill.play()
-                    //e.enemiesPos.y = this.canvasSize.h + e.enemiesSize.h
                     if (this.score <= 1900) this.score += 100
-                    //else this.isVictory()
                     this.player.canJump = true
                     console.log('Arriba enemigo')
                 }
@@ -208,8 +203,7 @@ const app = {
             this.ctx.textAlign = "center",
             this.ctx.fillText('GAME OVER', this.canvasSize.w / 2, this.canvasSize.h / 2)
         this.ctx.font = "small-caps 50px Courier New"
-        this.ctx.fillText(`YOU SUCK MOTHERFUCKER!!`, this.canvasSize.w / 2, this.canvasSize.h / 2 + 100)
-        this.ctx.fillText(`You killed: ${this.score / 100} enemies`, this.canvasSize.w / 2, this.canvasSize.h / 2 + 200)
+        this.ctx.fillText(`You killed: ${this.score / 100} enemies`, this.canvasSize.w / 2, this.canvasSize.h / 2 + 100)
     },
 
     isGameOver() {

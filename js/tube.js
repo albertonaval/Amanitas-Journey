@@ -3,7 +3,7 @@ class Tube {
         this.ctx = ctx
         this.canvasSize = canvasSize
 
-        this.tubeSize = { w: 180, h: 100 }
+        this.tubeSize = { w: 180, h: 120 }
         this.tubePos = { x: -5, y: 200 }
         this.init()
     }
